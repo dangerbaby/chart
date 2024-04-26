@@ -1,5 +1,3 @@
-
-
 %housekeeping:
 addpath(genpath('./mfiles'));
 clear all;close all
