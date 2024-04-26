@@ -1,8 +1,11 @@
 dirnames = dir([g.name,'/work/outfiles']);
 cnt = 0;
-ics = 1;
-isb = 1;
-ixb = 1;
+
+disp('Plotting results')
+if contains(g.mm.modelname,'cshore','IgnoreCase',1);ics = 1;else;ics=0;end
+if contains(g.mm.modelname,'sbeach','IgnoreCase',1);isb = 1;else;isb=0;end
+if contains(g.mm.modelname,'xbeach','IgnoreCase',1);ixb = 1;else;ixb=0;end
+
 for i = 3:length(dirnames)
   %  for i = 3
   cnt = cnt+1;

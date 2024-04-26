@@ -35,10 +35,10 @@ for i = 3:length(dirnames)
                 dirnames(i).name,'/',in(conf,storm).name,'>junk & ']);
       elseif ispc
         %serial run:			%
-        %system(['..\executables\SBEACH_WIN.out -cfgFN work\infiles\',...
-        %        dirnames(i).name,'\',fnames(j).name(1:end-4),'>NUL']);
+        %system(['.\executables\SBEACH_WIN.out -cfgFN ',g.name,'\work\infiles\',...
+        %        dirnames(i).name,'\',in(conf,storm).name,'']);
         % parr run
-        system(['start /B ..\executables\SBEACH_WIN.out -cfgFN work\infiles\',...
+        system(['start /B .\executables\SBEACH_WIN.out -cfgFN ',g.name,'\work\infiles\',...
                 dirnames(i).name,'\',in(conf,storm).name,'>NUL']);
         
       end
@@ -63,7 +63,16 @@ for i = 3:length(dirnames)
         pause(.2);[r,n]=system('pgrep -c SBEACH');n = str2num(n);disp([num2str(n),' processes still running'])
       end
     elseif ispc
-      [j1 j2] = system('tasklist');
+      %system('tasklist')
+      [j1 n] = system('tasklist |find /I /C "SBEACH_WIN.out"');
+      n = str2num(n);disp([num2str(n),' processes still running'])
+      %pause(2);
+      while(n>0)
+        pause(.5);[j1 n]=system('tasklist |find /I /C "SBEACH_WIN.out"');
+        n = str2num(n);disp([num2str(n),' processes still running'])
+      end
+      %pause(.5)
+      %[j1 j2] = system('tasklist')
     end
     %toc
     %return    

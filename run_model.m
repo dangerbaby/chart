@@ -1,12 +1,16 @@
+
+
 %housekeeping:
 addpath(genpath('./mfiles'));
 clear all;close all
 
-% project name and directory
+% project name and directories
+g.pathtostormsim = '../StormSim-Library/StormSim_Library/';
 g.name = 'james_island';
+addpath(g.name);
 
 %more housecleaning
-g.iclean = 0;
+g.iclean = 1;
 g = clean(g);
 
 % load old forcing, if it exists and iclean = 0
@@ -32,7 +36,7 @@ g = set_morpho_model_inputs('morpho_model_inputs',g);
 g = do_morphology(g);
 
 %plot profile with changes
-%plot_results
+plot_results
 
 
 
@@ -43,22 +47,22 @@ g = do_morphology(g);
 return
 
 
-if ~exist('config')
-  %housekeeping:
-  clear all;close all
-  addpath(genpath('../StormSim_Library'),genpath('../brad_mfiles'));
+% if ~exist('config')
+%   %housekeeping:
+%   clear all;close all
+%   addpath(genpath('../StormSim_Library'),genpath('../brad_mfiles'));
 
-  % use SS to make series of storms, separated into years 
-  stormsim_input_file = 'StormSim_Inputs.xlsx'; %Include relative path if not in parent directory
-  config = call_input_parser(stormsim_input_file); % 
-  config = alter_config_inputs(config);
-  [storm, ~, prob_mass, config] = call_chs_data_formater(config);
-  [project_forcing] = call_project_forcing_formater(config, storm, prob_mass);
+%   % use SS to make series of storms, separated into years 
+%   stormsim_input_file = 'StormSim_Inputs.xlsx'; %Include relative path if not in parent directory
+%   config = call_input_parser(stormsim_input_file); % 
+%   config = alter_config_inputs(config);
+%   [storm, ~, prob_mass, config] = call_chs_data_formater(config);
+%   [project_forcing] = call_project_forcing_formater(config, storm, prob_mass);
 
-  % make proper time-series of boundary conditions
-  forcing = make_timeseries(config,project_forcing);
+%   % make proper time-series of boundary conditions
+%   forcing = make_timeseries(config,project_forcing);
 
-end
+% end
 
 return
 
