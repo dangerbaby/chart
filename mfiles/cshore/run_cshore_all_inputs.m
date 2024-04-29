@@ -27,7 +27,8 @@ for i = 3:length(dirnames)
         % system(['../executables/CSHORE_USACE_LINUX.out ./work/infiles/',...
         %         dirnames(i).name,'/',in(conf,storm).name,' ']);
       elseif ispc
-        system(['start /B ..\executables\cshore_usace_win.out work\infiles\',...
+        % parr run
+        system(['start /B .\executables\cshore_usace_win.out ',g.name,'\work\infiles\',...
                 dirnames(i).name,'\',in(conf,storm).name,'>NUL']);
       end
     end
@@ -36,10 +37,15 @@ for i = 3:length(dirnames)
     if isunix
       [r,n]=system('pgrep -c CSHORE');n = str2num(n);disp([num2str(n),' processes still running'])
       while(n>0)
-	pause(1);[r,n]=system('pgrep -c CSHORE');n = str2num(n);disp([num2str(n),' processes still running'])
+	pause(2);[r,n]=system('pgrep -c CSHORE');n = str2num(n);disp([num2str(n),' processes still running'])
       end
     elseif ispc
-      [j1 j2] = system('tasklist');
+      [j1 n] = system('tasklist |find /I /C "cshore_usace_win.out"');
+      n = str2num(n);disp([num2str(n),' processes still running'])
+      while(n>0)
+        pause(2);[j1 n]=system('tasklist |find /I /C "cshore_usace_win.out"');
+        n = str2num(n);disp([num2str(n),' processes still running'])
+      end
     end
     % now read results and write new bot position for the next time 
     for conf =1:size(in,1)

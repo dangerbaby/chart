@@ -36,6 +36,12 @@ for i = 3:length(dirnames)
     hl=legend(hh,'Initial','SBEACH');set(hl,'Interpreter','latex')
     title(sbout(conf,1).name,'interpreter','none','fontsize',16)
   end
+  if ics&~ixb&~ixb
+    hh(1) = plot(csout(conf,1).x_offset-csout(conf,1).x,csout(conf,1).initial_profile,'k');hold on
+    hh(2) = plot(csout(conf,1).x_offset-csout(conf,1).x,csout(conf,1).final_profile,'b-');hold on
+    hl=legend(hh,'Initial','CSHORE');set(hl,'Interpreter','latex')
+    title(csout(conf,1).name,'interpreter','none','fontsize',16)
+  end
   if ics&isb&~ixb
     hh(1) = plot(csout(conf,1).x_offset-csout(conf,1).x,csout(conf,1).initial_profile,'k');hold on
     hh(1) = plot(sbout(conf,1).x,sbout(conf,1).initial_profile,'kx');hold on

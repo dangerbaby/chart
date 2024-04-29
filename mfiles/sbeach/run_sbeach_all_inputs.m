@@ -42,19 +42,6 @@ for i = 3:length(dirnames)
                 dirnames(i).name,'\',in(conf,storm).name,'>NUL']);
         
       end
-      % let the system catch up is more runs than clearevery param
-      %if mod(cnt,clearevery)==0;
-      %     if isunix
-      %       [r,n]=system('pgrep -c SBEACH');n = str2num(n);disp(num2str(n))
-      %       while(n>0)
-      %         pause(.5);[r,n]=system('pgrep -c SBEACH');n = str2num(n);disp(num2str(n))
-      %       end
-      %     else
-      %       pause(10)
-      %     end
-      %   end
-      % end
-      %pause 
     end
     % now let it catch up
     if isunix
