@@ -1,0 +1,9 @@
+tar -cvf vids.tar \
+    ../../graphics/forcing_from_sea_or_bay.avi\
+    ../../graphics/river_equilibrium.avi\
+    ../../graphics/overwash_without_waves.avi\
+    ../../graphics/overwash_with_waves.avi\
+    ../../graphics/river_without_hardbottom.avi\
+    ../../graphics/river_with_hardbottom.avi\
+    ../../graphics/progressive_degradation_waves_without_hardbottom.avi\
+    ../../graphics/progressive_degradation_waves_with_hardbottom.avi
