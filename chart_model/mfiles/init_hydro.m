@@ -27,7 +27,7 @@ h.q=dum;
 %h.dqdt = dumw;
 %h.eta_1_inc=0;
 %
-h.time_ts = p.dt:p.dt:p.ftime+p.dt;
+h.time_ts = 0:p.dt:p.ftime+p.dt;
 h.time_step = 1;
 h.time=0;
 h.old=h;

@@ -2,8 +2,9 @@ function [h] = plot_results(g,h,p,s)
 iplotu = p.plot.plotu;iplotsed = p.plot.plotsed;ivid = p.plot.ividsave;
 vidname = p.plot.vidsavename;
 amp = 100;
-ampqb = 5e3;
+ampqb = 3e3;
 ampu = 3;
+
 %if (mod(h.time_step,max(1,floor(p.jumpplot/p.dt)))==0|h.time_step<1000)
 if (mod(h.time_step-2,p.jumpplot)==0)
   if h.time_step==2
@@ -22,7 +23,7 @@ if (mod(h.time_step-2,p.jumpplot)==0)
     h.plot.eta=fill([g.x fliplr(g.x)],[h.eta fliplr(g.zb)],[.8 .8 1]);
     h.plot.eta.FaceAlpha=.5;
     %axis([min(g.x) max(g.x) .5*min(g.zb) max(max(g.zb),.2)])
-    axis([min(g.x) max(g.x) min(g.zb)-.1 max([max(g.zb) .8 max(1.1*p.wave.Hrms)])])
+    axis([min(g.x) max(g.x) min(g.zb)-.1 max(max(g.zb),.8)])
     ax = axis;ax1 = (ax(2)-ax(1));ax2 = (ax(4)-ax(3));
     plot([ax(1)+.5*ax1 ax(1)+.8*ax1],[ax(3)+.2*ax2 ax(3)+.2*ax2],'k','linewidth',3);
     text(ax(1)+.75*ax1,ax(3)+.1*ax2,['$T_f = $',num2str(p.ftime)],'interpreter','latex','fontsize',fs)
@@ -35,8 +36,6 @@ if (mod(h.time_step-2,p.jumpplot)==0)
     set(gca,'TickLabelInterpreter','latex','fontsize',fs)
     if p.wave.Hrms>0;
       h.plot.Hrms = plot(g.x,h.wave.Hrms,'b','linewidth',2);
-      h.plot.Hrms_txt = text(ax(1)+.02*ax1,h.bc.Hrms(1)+.05*ax2,...
-                             ['$ H_{rms} =  ',sprintf('%3.2f',h.bc.Hrms(1)),' m$ '],'interpreter','latex','fontsize',fs)
     end
 
     if p.wind_vel>0
@@ -64,7 +63,7 @@ if (mod(h.time_step-2,p.jumpplot)==0)
       h.plot.qb = quiver(g.x(inds),g.zb(inds)+.01,ampqb*s.qb(inds),0*g.x(inds),0);
       h.plot.qb.MaxHeadSize = .005;
       h.plot.qbinds = inds;
-      h.plot.qb.LineWidth=2;
+      h.plot.qb.LineWidth=1;
       h.plot.qb.Color='r';
       h.plot.ampqb = ampqb;
     end

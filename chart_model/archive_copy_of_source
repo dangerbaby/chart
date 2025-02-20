@@ -1,0 +1,8 @@
+#!/bin/sh
+# 
+dum1=`date +"%Y-%m-%d-%H-%M"`
+dum2="chart-model-source-"$dum1
+echo Saving current mfiles and planar to $dum2
+
+mkdir ./do_not_git/$dum2
+cp -r mfiles planar ./do_not_git/$dum2

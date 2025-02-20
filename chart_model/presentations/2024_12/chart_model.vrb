@@ -1,0 +1,31 @@
+\frametitle{The Challenge of Overtopping}
+
+ \begin{columns}[c] %
+\begin{column}{0.5\textwidth}
+   No simple and general
+   way to unclude wave-driven mass flux in a depth-integrated model.
+   So let's cheat: The Eurotop empirical relationship has been
+   established with form
+   \begin{equation*}
+q = 0.09 \sqrt{g H_{m0}^3} \exp{\left\{-1.5\frac{R}{0.5 H_{m0}}\right\}}
+   \end{equation*}
+where the exact coefficents seem to be the source of endless bickering.
+\end{column}
+\vrule{}
+\begin{column}{0.5\textwidth}
+\begin{figure}
+  \includegraphics[width=.8\linewidth]{./overtopping_fig.pdf}
+\end{figure}
+
+{\relsize{-3}
+\begin{verbatim}
+  g.struct.crest_x = mean(x)+.2*L; %x pos
+  g.struct.crest_elev = .25;       %add structure geom
+  g.struct.crest_width = 2;        %add structure geom
+  g.struct.side_slope = 1/1;       %add structure geom
+  g.struct.iover = 1;              %include eurotop ovrtp vol
+  g = addstructure(g);             %add to g structure
+\end{verbatim}%
+}
+\end{column}
+ \end{columns}

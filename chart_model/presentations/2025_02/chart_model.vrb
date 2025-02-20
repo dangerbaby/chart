@@ -1,0 +1,12 @@
+\frametitle{New Hydraulic Time-step Integration}
+  Within \texttt{shallow\_water\_moving\_shore.m}, integrate in time from time-step $k$ to $k+1$:
+   \begin{itemize}
+   \item Compute wave transformation and stresses
+   \item Predict $q^{k+1}$ on the basis of $q^{k},h^k$ using momentum conservation
+   \item \textcolor{blue}{$\hat{q}_i^{k+1} = (1-\nu) q_i^{k+1} + \frac{\nu}{2}(q_{i+1}^{k+1} + q_{i-1}^{k+1})
+     \;\;\;\;\;\; 0\leq \nu <0.5 \;\;\;  \mbox{for} \;\;\; max(Fr)>1$}
+   \item \textcolor{blue}{$\hat{h}_i^{k} = (1-\nu) h_i^{k} + \frac{\nu}{2}(h_{i+1}^{k} + h_{i-1}^{k})
+     \;\;\;\;\;\;\;\;\;\;\;\;\; 0\leq \nu <0.5 \;\;\;  \mbox{for} \;\;\; max(Fr)>1$}
+   \item \textcolor{blue}{Restore wet/dry conditions that preceded smoothing}
+   \item Predict $h^{k+1}$ on the basis of $\hat{q}^{k+1},\hat{h}^k$ using mass conservation
+   \end{itemize}
