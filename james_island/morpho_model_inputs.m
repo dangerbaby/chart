@@ -16,5 +16,9 @@ mm.cshore.slp = .2;
 mm.cshore.slpot = .2;
 mm.cshore.blp = .002;
 mm.cshore.rwh = .1;
+mm.irecover = 0;
+mm.ilongshoregrad = 0;
+mm.T90 = 20; %day
+mm.dXdt = .01;%m/day
 
 

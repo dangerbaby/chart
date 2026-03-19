@@ -11,7 +11,7 @@ fidlog = fopen('log.txt','w');
 numruns=0;
 tic;
 for i = 3:length(dirnames)
-  clear allout;    
+  clear out ;    
   [success,message,messageid] = mkdir([g.name,'/work/outfiles/',dirnames(i).name]);
   load([g.name,'/work/infiles/',dirnames(i).name,'/sbin.mat'])
   %dumnames = dir(['./work/infiles/',dirnames(i).name,'/*',sprintf('%03d',1),'.CFG']);
@@ -77,8 +77,26 @@ for i = 3:length(dirnames)
       out(conf,storm).max_water_elevation_plus_setup= dum.etamax;
       out(conf,storm).name                          = in(conf,storm).name;
 
-      % use zbf to make new PRI file
-      if storm<size(in,2)
+     
+      zb_prestorm = nonstorm_changes(g.mm,in(conf,storm),out(conf,storm).final_profile);
+      
+      % if g.mm.irecover==1
+      %   zbi = out(conf,storm).final_profile;
+      %   zbe = out(conf,1).initial_profile;
+      %   T90 = g.mm.T90; %time to 90% recovery
+      %   T  = in(conf,storm).T_recover;
+      %   z_berm = in(conf,storm).height_berm+.1;
+      %   zb_prestorm = beach_recover(zbi,zbe,z_berm,T90,T);
+      %   %zb_prestorm = dum.zbf;
+      % else
+      %   zb_prestorm = dum.zbf;
+      % end
+      % max(out(conf,1).initial_profile - in(conf,storm).zbe)
+      % max(zb_prestorm-zb_prestorm2)
+      % error
+      %zbf_recovered = beach_recover(g,dum.zbi,dum.zbf,T);
+      % use zbf or zbf_recovered to make new PRI file
+      if storm<size(in,2)% except for last storm
         newfn = [g.name,'/work/infiles/',dirnames(i).name,'/',in(conf,storm+1).name,'.PRI'];
         fid = fopen(newfn,'w');
         in(conf,storm).header = {'C>------------------------------------------------------------'
@@ -87,7 +105,8 @@ for i = 3:length(dirnames)
           fprintf(fid,'%s \n',cell2mat(in(conf,storm).header(ii)));
         end
         fprintf(fid,'   %d\n',length(dum.x));
-        fprintf(fid,'   %6.3f %6.3f \n',[dum.x' dum.zbf']');
+        %fprintf(fid,'   %6.3f %6.3f \n',[dum.x' dum.zbf']');
+        fprintf(fid,'   %6.3f %6.3f \n',[dum.x' zb_prestorm']');
         fclose(fid);
       end
       %if storm==numstorms&j==length(fnames)

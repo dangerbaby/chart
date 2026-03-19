@@ -27,6 +27,9 @@ for i = 1:length(reaches) % loop over reaches
                           '------------------------------------------------------------'};
         
         ftime = (bc(j).timeseries(k).date(end)-bc(j).timeseries(k).date(1))*24*3600;      % [sec] final time, dictates model duration
+        in(l,k).T_recover = bc(j).T_recover(k);
+        in(l,k).height_berm = 0.3048*reaches(i).profile(l).height_berm_ft; % 
+
         in(l,k).dt = 60*60;         % time interval in seconds for wave and water level conditions
         in(l,k).timebc_wave = [0:in(l,k).dt:ftime];
         %in(l,k).timebc_wave = (storms(k).date-storms(k).date(1))*24*3600;

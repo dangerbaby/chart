@@ -50,17 +50,32 @@ for i = 3:length(dirnames)
     % now read results and write new bot position for the next time 
     for conf =1:size(in,1)
       dum=load_results_chart([g.name,'/work/infiles/',dirnames(i).name,'/',in(conf,storm).name]);
-      out(conf,storm).x = dum.x;
-      out(conf,storm).initial_profile               = dum.initial_profile;               
-      out(conf,storm).final_profile                 = dum.final_profile  ;               
-      out(conf,storm).max_profile_elev              = dum.max_profile_elev ;             
-      out(conf,storm).min_profile_elev              = dum.min_profile_elev;              
-      out(conf,storm).max_hrms                      = dum.max_hrms       ;               
-      out(conf,storm).max_water_elevation_plus_setup= dum.max_water_elevation_plus_setup ;
+      out(conf,storm).x                             = in(conf,storm).x_offset-fliplr(dum.x');
+      out(conf,storm).initial_profile               = fliplr(dum.initial_profile');               
+      out(conf,storm).final_profile                 = fliplr(dum.final_profile')  ;               
+      out(conf,storm).max_profile_elev              = fliplr(dum.max_profile_elev') ;             
+      out(conf,storm).min_profile_elev              = fliplr(dum.min_profile_elev');              
+      out(conf,storm).max_hrms                      = fliplr(dum.max_hrms')       ;               
+      out(conf,storm).max_water_elevation_plus_setup= fliplr(dum.max_water_elevation_plus_setup') ;
       out(conf,storm).name                          = in(conf,storm).name;
       out(conf,storm).x_offset                      = in(conf,storm).x_offset;
+
+      zb_prestorm = nonstorm_changes(g.mm,in(conf,storm),out(conf,storm).final_profile);
+      
       if storm<size(in,2)
-        in(conf,storm+1).zb = out(conf,storm).final_profile;
+        % if g.mm.irecover==1
+        %   zbi = out(conf,storm).final_profile;
+        %   zbe = out(conf,1).initial_profile;
+        %   T90 = g.mm.T90; %time to 90% recovery
+        %   T  = in(conf,storm).T_recover;
+        %   z_berm = in(conf,storm).height_berm+.1;
+        %   zb_prestorm = beach_recover(zbi,zbe,z_berm,T90,T);
+        %   %zb_prestorm = dum.zbf;
+        % else
+        %   zb_prestorm = out(conf,storm).final_profile;
+        % end
+        in(conf,storm+1).zb = fliplr(zb_prestorm);
+        %in(conf,storm+1).zb = fliplr(out(conf,storm).final_profile);
       end
     end
   end %storm

@@ -3,7 +3,7 @@ function reaches=find_all_combos(inp)
 names = inp.names;
 inp = rmfield(inp,'names');
 fn = fieldnames(inp);
-
+fn = fn(~contains(fn,'min'));
 % first check to make sure there are no scalars --if so, populate array to fill number of reaches
 for i = 1:length(names)
   for ii = 1:length(fn)
@@ -62,6 +62,15 @@ for i = 1:length(names)
       end
     end
   end
+  reach.min_height_dune=inp.min_height_dune{i};
+  reach.min_width_dune=inp.min_width_dune{i};
+  reach.min_width_berm=inp.min_width_berm{i};  
+  reach.min_height_berm=inp.min_height_berm{i};
+  reach.min_width_upland  = inp.min_width_upland{i};
+  reach.min_height_upland  = inp.min_height_upland{i};
+  reach.min_slope_dune  = inp.min_slope_dune{i};
+  reach.min_slope_foreshore  = inp.min_slope_foreshore{i};
+
   reaches(i)=reach;
 end
 

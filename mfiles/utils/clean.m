@@ -5,6 +5,7 @@ if g.iclean
   disp('Cleaning up old results and inputs')
   [~,~,~]=rmdir([g.name,'/work/infiles'],'s');
   [~,~,~]=rmdir([g.name,'work/outfiles'],'s');
+  warning('off')
   delete([g.name,'/g.mat']);
 end
 

@@ -1,6 +1,5 @@
 function brad_forcing = make_timeseries(config,project_forcing)
 
-
 disp(['Number of time-series = ',num2str((config.mcs_nLC))])
 disp(['Each of = ',num2str(config.mcs_nYears),' years'])
 
@@ -12,7 +11,7 @@ for i = 1:length(project_forcing.CC.Timeseries)
   unittime = 4; %day
   numinterval = floor(365/unittime);
   unittime = 365/numinterval;
-  t = [];Hmo = [];wl = [];Tp=[];dir = [];
+  t = [];Hmo = [];wl = [];Tp=[];dir = [];t0 =[];tf = [];T_recover= [];
   for j = 1:config.mcs_nYears
     
     ind0yr = find(project_forcing.CC.Timeseries(i).LCNUM(:,10)==j&(project_forcing.CC.Timeseries(i).LCNUM(:,3)==0));
@@ -33,7 +32,9 @@ for i = 1:length(project_forcing.CC.Timeseries)
         indstart = indstart(1);
         indend = ind0yr(find(indstart==ind0yr)+1)-1;indend=indend(1);
         ind = indstart:indend;
-        t = [t (j-1)*365+(k-1)*unittime+project_forcing.CC.Timeseries(i).LCNUM(ind,3)'/24];   
+        t = [t (j-1)*365+(k-1)*unittime+project_forcing.CC.Timeseries(i).LCNUM(ind,3)'/24]; 
+        t0 = [t0 (j-1)*365+(k-1)*unittime+project_forcing.CC.Timeseries(i).LCNUM(indstart,3)'/24];
+        tf = [tf (j-1)*365+(k-1)*unittime+project_forcing.CC.Timeseries(i).LCNUM(indend,3)'/24];
         Hmo = [Hmo project_forcing.CC.Timeseries(i).LCNUM(ind,6)'];Hmo(end) = NaN;   
         wl = [wl project_forcing.CC.Timeseries(i).LCNUM(ind,5)'];Hmo(end) = NaN;   
         Tp = [Tp project_forcing.CC.Timeseries(i).LCNUM(ind,7)'];Hmo(end) = NaN;   
@@ -51,6 +52,8 @@ for i = 1:length(project_forcing.CC.Timeseries)
   end
   if max((t(2:end)-t(1:end-1))<0);error('t is not monontonically increasing');end
   brad_forcing(i).t = t;  brad_forcing(i).Hmo = Hmo;  brad_forcing(i).Tp = Tp;  brad_forcing(i).wl = wl;  brad_forcing(i).dir=dir;
+    brad_forcing(i).t0 = t0;   brad_forcing(i).tf = tf; brad_forcing(i).numstorms = length(t0); 
+    brad_forcing(i).T_recover=[t0(2:end) NaN] - tf;%recovery time following storms in days.
 end
 
 return

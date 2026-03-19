@@ -27,6 +27,9 @@ for i = 1:length(reaches) % loop over reaches
                      'E>------------------------------------------------------------'};
         
         ftime = (bc(j).timeseries(k).date(end)-bc(j).timeseries(k).date(1))*24*3600;      % [sec] final time, dictates model duration
+        in(l,k).T_recover = bc(j).T_recover(k);
+        in(l,k).height_berm = 0.3048*reaches(i).profile(l).height_berm_ft; % 
+
         in(l,k).dt = 5*60;         % time interval in seconds for wave and water level conditions
         in(l,k).timebc_wave = [0:in(l,k).dt:ftime];
         %in(l,k).timebc_wave = (storms(k).date-storms(k).date(1))*24*3600;
@@ -38,12 +41,19 @@ for i = 1:length(reaches) % loop over reaches
         in(l,k).Hmo(in(l,k).Hmo<.005) = .005;
         in(l,k).swlbc = interp1(bc(j).timeseries(k).date,bc(j).timeseries(k).wl,in(l,k).datebc);
         in(l,k).angle = zeros(size(in(l,k).Hmo));    % constant incident wave angle at seaward boundary in
+
         zb = 0.3048*reaches(i).profile(l).z_ft; % zb points
+        zbe = 0.3048*reaches(i).profile(l).z_equilib_ft; % zb points
+        min_zb = 0.3048*reaches(i).profile(l).min_z_ft; % zb points
         x  = 0.3048*reaches(i).profile(l).x_ft;
         in(l,k).x = (min(x):mm.dx:max(x));
         [j1 j2] = unique(x);
-        in(l,k).zb = interp1(x(j2),zb(j2),in(l,k).x);
-
+        
+        in(l,k).zb = interp1(x(j2),zb(j2),in(l,k).x);% only valid for k==1, but need dummy values in place
+        in(l,k).zbe = interp1(x(j2),zbe(j2),in(l,k).x);% only valid for k==1, but need dummy values in place
+        in(l,k).min_zb = interp1(x(j2),min_zb(j2),in(l,k).x);% only valid for k==1, but need dummy values in place
+        
+        
         in(l,k).d50 = reaches(i).d50(l);
         %First check for NaN
         if max(isnan([in(l,k).x(:);in(l,k).zb(:);in(l,k).Tp(:);in(l,k).Hmo(:);in(l,k).swlbc(:);in(l,k).angle(:)]))
@@ -51,7 +61,7 @@ for i = 1:length(reaches) % loop over reaches
         end
         % save the in structure --just in case
         save([g.name,'/work/infiles/',dirname,'/',in(l,k).name,'.mat'],'in');
-        if k==1;% PRI file
+        if k==1;% PRI file      only make first PRI file
                 %in(l,k).name
                 %in(l,k).dirname
           fid = fopen([g.name,'/work/infiles/',dirname,'/',in(l,k).name '.PRI'],'w');
