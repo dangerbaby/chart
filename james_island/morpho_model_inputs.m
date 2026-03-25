@@ -10,15 +10,16 @@ mm.dx = 1; % [m] default 1
 mm.gamma = .7; % default .7
 mm.tanphi = .63;
 mm.fw = .015;
-mm.cshore.effb = .003;
-mm.cshore.efff = .006;
-mm.cshore.slp = .2;
+mm.cshore.effb = .002;
+mm.cshore.efff = .004;
+mm.cshore.slp = .5;
 mm.cshore.slpot = .2;
-mm.cshore.blp = .002;
+mm.cshore.blp = .001;
 mm.cshore.rwh = .1;
-mm.irecover = 0;
-mm.ilongshoregrad = 0;
+mm.sbeach.K = .1*1.75e-6;
+mm.irecover = 1;
+mm.ilongshoregrad = 1;
 mm.T90 = 20; %day
-mm.dXdt = .01;%m/day
+mm.dXdt = .005;%m/day, pos for accretion
 
 

@@ -21,6 +21,10 @@ tot(row_ind) = cellstr(['  ',num2str(in.dx)]);
 dum = strfind(tot,'fill_ndt');
 row_ind = find(~cellfun('isempty',dum));
 tot(row_ind) = cellstr(['  ',num2str(length(in.timebc_wave)),'  ',num2str(in.dt/60)]);
+%fill_K
+dum = strfind(tot,'fill_K');
+row_ind = find(~cellfun('isempty',dum));
+tot(row_ind) = cellstr(['  ',num2str(max(0.25E-6,in.K))]);
 %     fill_dtwav
 dum = strfind(tot,'fill_dtwav');
 row_ind = find(~cellfun('isempty',dum));

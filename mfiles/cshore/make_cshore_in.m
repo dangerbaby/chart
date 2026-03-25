@@ -49,9 +49,15 @@ for i = 1:length(reaches) % loop over reaches
 
         if k==1;
           zb = 0.3048*reaches(i).profile(l).z_ft; % zb points
+          zbe = 0.3048*reaches(i).profile(l).z_equilib_ft; % zb points
+          min_zb = 0.3048*reaches(i).profile(l).min_z_ft; % zb points
+                                        
           [j1 j2] = unique(x);
-          in(l,k).zb = interp1(max(x)-x(j2),zb(j2),in(l,k).x);
+          %in(l,k).zb = interp1(max(x)-x(j2),zb(j2),in(l,k).x);
           in(l,k).zb = interp1(x,zb,fliplr(x2));
+          in(l,k).zbe = interp1(x,zbe,fliplr(x2));
+          in(l,k).min_zb = interp1(x,min_zb,fliplr(x2));
+
         else
           in(l,k).zb = 999;
         end

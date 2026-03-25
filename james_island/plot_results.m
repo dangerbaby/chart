@@ -43,13 +43,13 @@ if iplotmorpho
       hh(1) = plot(sbout(conf,1).x,sbout(conf,1).initial_profile,'k','linewidth',lw);hold on
       hh(2) = plot(sbout(conf,1).x,sbout(conf,1).final_profile,'b-','linewidth',lw);hold on
       hh(3) = plot(sbout(conf,2).x,sbout(conf,2).initial_profile,'r--','linewidth',lw);
-      hh(4) = plot(sbout(conf,1).x,sbout(conf,end).final_profile,'k--','linewidth',lw);
+      hh(4) = plot(sbout(conf,1).x,sbout(conf,end).final_profile,'k--','linewidth',lw+2);
       hlabs = {'Initial';'SBEACH after 1st storm';'Before 2nd storm'; ...
                ['SBEACH after ',num2str(size(sbout,2)),' storms']};
-      plot(sbin(conf,1).x,sbin(conf,1).min_zb,'r-','linewidth',lw);
+      plot(sbin(conf,1).x,sbin(conf,1).min_zb,'-','color',[.5 .5 .5],'linewidth',lw);
       hl=legend(hh,hlabs,'Interpreter','latex');
-      title([strrep(sbout(conf,1).name,'_','-'),' ;  Recovery = ',num2str(g.mm.irecover),...
-             '  $T_{90}$ = ',num2str(g.mm.T90)],'Interpreter','latex','fontsize',fs)
+      title([strrep(sbout(conf,1).name,'_','-'),' ;  iRecovery = ',num2str(g.mm.irecover),...
+             '  $T_{90}$ = ',num2str(g.mm.T90),'  ilongshoregrad = ',num2str(g.mm.ilongshoregrad)],'Interpreter','latex','fontsize',fs)
     xlim([0 500])
     end
     if ics&~isb&~ixb

@@ -8,7 +8,7 @@ if(isnan(T));zbf=zbi;return;end
 dX = dXdt*T;
 x = 0:length(zbi)-1;
 zbdum = interp1(x+dX,zbi,x);
-wt = zbi<=z_berm-sign(dX)*.1;
+wt = zbi<=z_berm-sign(dX)*.2;
 zbf = (1-wt).*zbi+wt.*zbdum;
 indbad = isnan(zbf);
 zbf(indbad) = zbi(indbad);

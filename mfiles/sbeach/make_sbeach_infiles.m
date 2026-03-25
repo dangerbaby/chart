@@ -28,6 +28,8 @@ for i = 1:length(reaches) % loop over reaches
         
         ftime = (bc(j).timeseries(k).date(end)-bc(j).timeseries(k).date(1))*24*3600;      % [sec] final time, dictates model duration
         in(l,k).T_recover = bc(j).T_recover(k);
+        dum = cumsum([ 0 g.bc(j).T_recover]);
+        in(l,k).T_recover_cumulative = dum(k);
         in(l,k).height_berm = 0.3048*reaches(i).profile(l).height_berm_ft; % 
 
         in(l,k).dt = 5*60;         % time interval in seconds for wave and water level conditions
@@ -50,10 +52,10 @@ for i = 1:length(reaches) % loop over reaches
         [j1 j2] = unique(x);
         
         in(l,k).zb = interp1(x(j2),zb(j2),in(l,k).x);% only valid for k==1, but need dummy values in place
-        in(l,k).zbe = interp1(x(j2),zbe(j2),in(l,k).x);% only valid for k==1, but need dummy values in place
-        in(l,k).min_zb = interp1(x(j2),min_zb(j2),in(l,k).x);% only valid for k==1, but need dummy values in place
-        
-        
+        in(l,k).zbe = interp1(x(j2),zbe(j2),in(l,k).x);% 
+        in(l,k).min_zb = interp1(x(j2),min_zb(j2),in(l,k).x);% 
+        in(l,k).dXdt = mm.dXdt;
+        in(l,k).K = mm.sbeach.K;
         in(l,k).d50 = reaches(i).d50(l);
         %First check for NaN
         if max(isnan([in(l,k).x(:);in(l,k).zb(:);in(l,k).Tp(:);in(l,k).Hmo(:);in(l,k).swlbc(:);in(l,k).angle(:)]))

@@ -1,7 +1,7 @@
 function g = make_forcing(g)
 if ~g.iclean;return;end
 cheat = 1;
-scale = 2;
+scale = 1;
 %addpath(genpath('~/wes/StormSim-Library/StormSim_Library'))
 addpath(genpath(g.pathtostormsim));
 

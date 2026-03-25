@@ -6,6 +6,7 @@ for i = 1:length(g.forcing)%loop over monte-carlo
   indstart = find(g.forcing(i).summary(:,3)==0);
   indend = [indstart-1;size(g.forcing(i).summary,1)];indend = indend(2:end);
   bc(i).T_recover = g.forcing(i).T_recover; %Recovery time following storm in days.
+
   for j = 1:length(indstart)
     ind = indstart(j):indend(j);
     bc(i).timeseries(j).date = g.forcing(i).summary(ind,3)/24;         

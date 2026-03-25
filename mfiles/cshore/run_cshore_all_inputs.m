@@ -60,7 +60,7 @@ for i = 3:length(dirnames)
       out(conf,storm).name                          = in(conf,storm).name;
       out(conf,storm).x_offset                      = in(conf,storm).x_offset;
 
-      zb_prestorm = nonstorm_changes(g.mm,in(conf,storm),out(conf,storm).final_profile);
+      zb_prestorm = nonstorm_changes(g.mm,in(conf,storm),out(conf,storm).final_profile)
       
       if storm<size(in,2)
         % if g.mm.irecover==1
