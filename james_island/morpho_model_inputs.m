@@ -2,7 +2,7 @@
 %START user model inputs
 mm.modelname = {}; 
 mm.modelname = {'sbeach'}; 
-%mm.modelname = {'cshore'}; 
+mm.modelname = {'cshore'}; 
 %mm.modelname = {'cshore sbeach'}; 
 %mm.modelname = {'xbeach'}; 
 %

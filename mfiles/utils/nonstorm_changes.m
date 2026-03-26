@@ -21,7 +21,10 @@ if isfield(in,'irecover')
     else
       zbe = in.zbe;
     end
+
     zbfdum = beach_recover(in.zbi,zbe,in.z_berm,in.T90,in.T_recover);
+    %[zbe;zbfdum]
+    %error
     dz = dz+(zbfdum-in.zbi);
   end
 end

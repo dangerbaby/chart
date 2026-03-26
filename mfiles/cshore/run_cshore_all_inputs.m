@@ -60,7 +60,21 @@ for i = 3:length(dirnames)
       out(conf,storm).name                          = in(conf,storm).name;
       out(conf,storm).x_offset                      = in(conf,storm).x_offset;
 
-      zb_prestorm = nonstorm_changes(g.mm,in(conf,storm),out(conf,storm).final_profile)
+      in2.ilongshoregrad = g.mm.ilongshoregrad;
+      in2.dXdt = in(conf,storm).dXdt;
+      in2.irecover = g.mm.irecover;
+      in2.zbi = out(conf,storm).final_profile;
+      in2.zbe = fliplr(in(conf,1).zbe);% flipped because in structure has pos onshore coords
+      in2.min_zb = fliplr(in(conf,1).min_zb);
+      in2.T90 = g.mm.T90; %time to 90% recovery
+      in2.T_recover  = in(conf,storm).T_recover;
+      in2.T_recover_cumulative  = in(conf,storm).T_recover_cumulative;
+      in2.z_berm = in(conf,storm).height_berm+.1;
+      
+      zb_prestorm = nonstorm_changes(in2);
+      
+      
+      %zb_prestorm = nonstorm_changes(g.mm,in(conf,storm),out(conf,storm).final_profile)
       
       if storm<size(in,2)
         % if g.mm.irecover==1
